@@ -63,15 +63,16 @@ public class Simulation {
 
     public void simulate(int generations) {
         int[][] currentWorld = grid.getWorld();
+        int[][] futureWorld = new int[currentWorld.length][currentWorld[0].length];
 
         for (int gens = 1; gens <= generations; gens++) {
             for (int i = 0; i < grid.getHeight(); i++) {
                 for (int j = 0; j < grid.getWidth(); j++) {
                     int newState = rules.update(j, i, grid);
-                    currentWorld[i][j] = newState;
+                    futureWorld[i][j] = newState;
                 }
             }
-            grid.setWorld(currentWorld);
+            grid.setWorld(futureWorld);
         }
     }
 
