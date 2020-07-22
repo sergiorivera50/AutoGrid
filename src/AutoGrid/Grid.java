@@ -87,6 +87,20 @@ public class Grid {
     }
 
     /**
+     * Sets a random state between a given range for every cell.
+     * @param min Minimum value.
+     * @param max Maximum value.
+     */
+    public void setRandom(int min, int max) {
+        for (int i = 0; i < GRID_HEIGHT; i++) {
+            for (int j = 0; j < GRID_WIDTH; j++) {
+                int num = min + (int)(Math.random() * ((max - min) + 1));
+                setState(j, i, num);
+            }
+        }
+    }
+
+    /**
      * @return A copy of the world.
      */
     public int[][] getWorld() {
@@ -168,6 +182,16 @@ public class Grid {
         }
 
         return total - getState(x, y); // discards central cell as neighbour
+    }
+
+    /**
+     * Default use for getting the sum of immediate neighbours from a given cell.
+     * @param x Cell's x-coordinate.
+     * @param y Cell's y-coordinate.
+     * @return The sum of all 3x3 adjacent values from a given cell.
+     */
+    public int getNeighbours(int x, int y) {
+        return getNeighbours(x, y, 3, 3);
     }
 
     /**
