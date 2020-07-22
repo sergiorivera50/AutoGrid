@@ -1,6 +1,10 @@
 package AutoGrid;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Grid {
     private final int GRID_WIDTH;
     private final int GRID_HEIGHT;
@@ -115,6 +119,21 @@ public class Grid {
         world = custom_world;
     }
 
+    private int[] asArray() {
+        List<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < GRID_HEIGHT; i++) {
+            for (int j = 0; j < GRID_WIDTH; j++) {
+                arr.add(world[i][j]);
+            }
+        }
+        // List to int[]
+        int[] intArr = new int[arr.size()];
+        int i = 0;
+        for (Integer e : arr)
+            intArr[i++] = e;
+        return intArr;
+    }
+
     /**
      * Sets all states to a default value of 1.
      */
@@ -192,6 +211,28 @@ public class Grid {
      */
     public int getNeighbours(int x, int y) {
         return getNeighbours(x, y, 3, 3);
+    }
+
+    public double mean() {
+        double sum = 0;
+        for (int i = 0; i < GRID_HEIGHT; i++) {
+            for (int j = 0; j < GRID_WIDTH; j++) {
+                sum += world[i][j];
+            }
+        }
+        return sum / (GRID_HEIGHT * GRID_WIDTH);
+    }
+
+    public double median() {
+        int[] arr = asArray();
+        Arrays.sort(arr);
+        double median;
+        if (arr.length % 2 == 0) {
+            median = ((double) arr[arr.length / 2] + (double) arr[arr.length / 2 - 1]) / 2;
+        } else {
+            median = (double) arr[arr.length / 2];
+        }
+        return median;
     }
 
     /**
