@@ -5,7 +5,7 @@ import AutoGrid.Rules.Rule;
 
 public class Simulation {
     private Grid grid;
-    private final Grid original;
+    private final Grid original_grid;
     private Rule rules;
 
     /**
@@ -13,9 +13,9 @@ public class Simulation {
      * @param simulation_grid Grid to operate in.
      * @param simulation_rules String containing the name of the rules configuration.
      */
-    public Simulation (Grid simulation_grid, String simulation_rules) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public Simulation (Grid simulation_grid, String simulation_rules) {
         grid = simulation_grid;
-        original = simulation_grid;
+        original_grid = simulation_grid;
         rules = getRules(simulation_rules);
     }
 
@@ -23,7 +23,7 @@ public class Simulation {
      * Gets rules configuration.
      * @param rules_name String containing the name of the rules configuration.
      */
-    private Rule getRules(String rules_name) throws IllegalAccessException {
+    private Rule getRules(String rules_name) {
         Object obj = new Object();
 
         try {
@@ -53,7 +53,7 @@ public class Simulation {
      * Sets Grid to its original state when the simulation began.
      */
     public void reset() {
-        grid = original;
+        grid = original_grid;
     }
 
     /**

@@ -3,7 +3,7 @@ import AutoGrid.Simulation;
 
 
 public class AutoGridMain {
-    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public static void main(String[] args) {
         Grid g = new Grid(10, 10);
         System.out.println("Grid has these parameters:");
         System.out.println("width= " + g.getWidth());

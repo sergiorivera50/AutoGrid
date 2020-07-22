@@ -2,10 +2,9 @@ package AutoGrid;
 
 
 public class Grid {
-    final int GRID_WIDTH;
-    final int GRID_HEIGHT;
-
-    final int DEFAULT_STATE = 0;
+    private final int GRID_WIDTH;
+    private final int GRID_HEIGHT;
+    private final int DEFAULT_STATE = 0;
 
     int[][] world;
 
@@ -123,11 +122,7 @@ public class Grid {
      */
     public Grid getNeighboursGrid(int x, int y, int width, int height) {
         if (width % 2 == 0 || height % 2 == 0) {
-            try {
-                throw new InvalidDimensionException("neighbour matrix dimensions must be odd!");
-            } catch (InvalidDimensionException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Neighbour matrix dimensions must be odd!");
         }
 
         int halfWidth = width / 2;
