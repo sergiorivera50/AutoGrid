@@ -119,6 +119,9 @@ public class Grid {
         world = custom_world;
     }
 
+    /**
+     * @return One-dimensional array containing all states.
+     */
     private int[] asArray() {
         List<Integer> arr = new ArrayList<>();
         for (int i = 0; i < GRID_HEIGHT; i++) {
@@ -135,13 +138,15 @@ public class Grid {
     }
 
     /**
-     * Sets all states to a default value of 1.
+     * Sets all states to a value of 1.
      */
     public void setOnes() {
         setState(1);
     }
 
-    // CHECK THIS METHOD
+    /**
+     * Resets all states to its default state.
+     */
     public void reset() {
         setState(DEFAULT_STATE);
     }
@@ -213,6 +218,9 @@ public class Grid {
         return getNeighbours(x, y, 3, 3);
     }
 
+    /**
+     * @return The mean value of all states.
+     */
     public double mean() {
         double sum = 0;
         for (int i = 0; i < GRID_HEIGHT; i++) {
@@ -223,6 +231,9 @@ public class Grid {
         return sum / (GRID_HEIGHT * GRID_WIDTH);
     }
 
+    /**
+     * @return The median value of all states.
+     */
     public double median() {
         int[] arr = asArray();
         Arrays.sort(arr);
@@ -236,7 +247,7 @@ public class Grid {
     }
 
     /**
-     * Overrides the toString() method in order to print this Grid in a nice format.
+     * Overrides the toString() method in order to print this class in a nice format.
      * @return A String to represent this object.
      */
     public String toString() {

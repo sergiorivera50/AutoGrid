@@ -60,7 +60,6 @@ public class Simulation {
      * Moves n steps forward in the simulation.
      * @param generations Number of steps to simulate.
      */
-
     public void simulate(int generations) {
         int[][] currentWorld = grid.getWorld();
         int[][] futureWorld = new int[currentWorld.length][currentWorld[0].length];
@@ -76,16 +75,26 @@ public class Simulation {
         }
     }
 
+    /**
+     * Calls the toString() method for this class and then prints the stored grid.
+     */
     public void show() {
         System.out.println(this);
         System.out.println(grid);
     }
 
+    /**
+     * Overrides the toString() method in order to print this class in a nice format.
+     * @return A String to represent this object.
+     */
     public String toString() {
         return "Simulation " + hash() + "\n\tGrid: " + grid.hash() + "[w:"+grid.getWidth()+"][h:"
                 + grid.getHeight()+"]\n\tRules: " + rules.getClass().getSimpleName();
     }
 
+    /**
+     * @return Hashcode of this object.
+     */
     public String hash() {
         return Integer.toHexString(this.hashCode());
     }
