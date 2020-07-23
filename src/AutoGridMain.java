@@ -8,21 +8,6 @@ public class AutoGridMain {
 
         System.out.println(g);
         Simulation sim = new Simulation(g, "OneDimensional");
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
-        sim.step();
-        System.out.println(g);
+        sim.simulate(5, true);
     }
 }

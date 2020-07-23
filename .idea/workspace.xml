@@ -94,7 +94,8 @@
       <workItem from="1595412438847" duration="6729000" />
       <workItem from="1595426564137" duration="6000000" />
       <workItem from="1595446288521" duration="1349000" />
-      <workItem from="1595495890894" duration="365000" />
+      <workItem from="1595495890894" duration="810000" />
+      <workItem from="1595496743637" duration="389000" />
     </task>
     <task id="LOCAL-00001" summary="Got rid of custom Exceptions, now exception cases are handled with standard output and System.exit(0), minor changes.">
       <created>1595427205642</created>
@@ -138,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595446809830</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[MINOR] Added javadoc comments to all methods from all classes, Grid.reset() method is now in use.w">
+      <created>1595496389323</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1595496389323</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,7 +181,8 @@
     <MESSAGE value="[MINOR] Fixed GameOfLife rules and simulate() method in Simulation class. Now everything works fine." />
     <MESSAGE value="[MINOR] Added statistical metrics (median and mean for the time being), added asArray() method for transforming 2D matrix to 1D vector/array." />
     <MESSAGE value="[MINOR] Added rule OneDimensional for 1D cellular automata." />
-    <option name="LAST_COMMIT_MESSAGE" value="[MINOR] Added rule OneDimensional for 1D cellular automata." />
+    <MESSAGE value="[MINOR] Added javadoc comments to all methods from all classes, Grid.reset() method is now in use.w" />
+    <option name="LAST_COMMIT_MESSAGE" value="[MINOR] Added javadoc comments to all methods from all classes, Grid.reset() method is now in use.w" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="83" key="#AutoGridMain" timestamp="1595412391947">
@@ -188,38 +197,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1595411539710" />
-    <state x="147" y="7" key="CommitChangelistDialog2" timestamp="1595496368250">
+    <state x="147" y="7" key="CommitChangelistDialog2" timestamp="1595496388398">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="147" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1595496368250" />
+    <state x="147" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1595496388398" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1595431645601">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1595431645601" />
-    <state x="445" y="122" key="FileChooserDialogImpl" timestamp="1595412691005">
+    <state x="445" y="122" key="FileChooserDialogImpl" timestamp="1595496700038">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="445" y="122" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595412691005" />
+    <state x="445" y="122" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595496700038" />
     <state x="591" y="328" key="Github.CreateGistDialog" timestamp="1595418851677">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="591" y="328" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1595418851677" />
-    <state width="745" height="113" key="GridCell.Tab.0.bottom" timestamp="1595496368292">
+    <state width="745" height="113" key="GridCell.Tab.0.bottom" timestamp="1595496701170">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="745" height="113" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595496368292" />
-    <state width="745" height="113" key="GridCell.Tab.0.center" timestamp="1595496368292">
+    <state width="745" height="113" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595496701170" />
+    <state width="745" height="113" key="GridCell.Tab.0.center" timestamp="1595496701169">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="745" height="113" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595496368292" />
-    <state width="745" height="113" key="GridCell.Tab.0.left" timestamp="1595496368292">
+    <state width="745" height="113" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595496701169" />
+    <state width="745" height="113" key="GridCell.Tab.0.left" timestamp="1595496701169">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="745" height="113" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595496368292" />
-    <state width="745" height="113" key="GridCell.Tab.0.right" timestamp="1595496368292">
+    <state width="745" height="113" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595496701169" />
+    <state width="745" height="113" key="GridCell.Tab.0.right" timestamp="1595496701170">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="745" height="113" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595496368292" />
+    <state width="745" height="113" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595496701170" />
     <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1595412414201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -248,14 +257,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="348" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1595431598921" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1595446814718">
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1595496394497">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1595446814718" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1595496394497" />
     <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595426630733">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1595426630733" />
+    <state x="499" y="178" key="extract.method.dialog" timestamp="1595496673792">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="178" key="extract.method.dialog/0.0.1536.824@0.0.1536.824" timestamp="1595496673792" />
     <state x="432" y="200" key="run.anything.popup" timestamp="1595418448885">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -91,6 +91,17 @@ public class Grid {
     }
 
     /**
+     * Sets a given state to a list of cells.
+     * @param coords int array storing all cells' coordinates.
+     * @param state The state wanted to be set.
+     */
+    public void setState(int[][] coords, int state) {
+        for (int[] point : coords) {
+            setState(point[0], point[1], state);
+        }
+    }
+
+    /**
      * Sets a random state between a given range for every cell.
      * @param min Minimum value.
      * @param max Maximum value.
@@ -244,6 +255,19 @@ public class Grid {
             median = (double) arr[arr.length / 2];
         }
         return median;
+    }
+
+    /**
+     * @return The sum of the states of all cells.
+     */
+    public int population() {
+        int sum = 0;
+        for (int i = 0; i < GRID_HEIGHT; i++) {
+            for (int j = 0; j < GRID_WIDTH; j++) {
+                sum += world[i][j];
+            }
+        }
+        return sum;
     }
 
     /**

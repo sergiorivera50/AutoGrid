@@ -60,7 +60,7 @@ public class Simulation {
      * Moves n steps forward in the simulation.
      * @param generations Number of steps to simulate.
      */
-    public void simulate(int generations) {
+    public void simulate(int generations, boolean print) {
         int[][] currentWorld = grid.getWorld();
         int[][] futureWorld = new int[currentWorld.length][currentWorld[0].length];
 
@@ -72,7 +72,12 @@ public class Simulation {
                 }
             }
             grid.setWorld(futureWorld);
+            if (print) System.out.println(grid);
         }
+    }
+
+    public void simulate(int generations) {
+        simulate(generations, false);
     }
 
     /**
