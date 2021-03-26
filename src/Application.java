@@ -1,7 +1,7 @@
 import AutoGrid.*;
 
 
-public class AutoGridMain {
+public class Application {
     public static void main(String[] args) {
         Grid g = new Grid(20, 1);
         g.setOnes();
