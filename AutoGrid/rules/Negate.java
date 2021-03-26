@@ -1,11 +1,12 @@
-package AutoGrid.Rules;
-import AutoGrid.Grid;
+package rules;
 
+import core.Location;
+import core.Grid;
 
 public class Negate extends Rule {
     @Override
-    public int update(int x, int y, Grid grid) {
-        int state = grid.getState(x, y);
+    public int update(Location loc, Grid grid) {
+        int state = grid.getState(loc);
         if (state == 0) {
             return 1;
         } else if (state == 1) {

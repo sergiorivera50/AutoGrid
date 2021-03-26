@@ -1,11 +1,10 @@
-package AutoGrid;
+package core;
 
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class Grid {
+public class Grid implements Cloneable {
     private final int GRID_WIDTH;
     private final int GRID_HEIGHT;
     private final int DEFAULT_STATE = 0;
@@ -17,26 +16,61 @@ public class Grid {
      * @param width Width of the grid.
      * @param height Height of the grid.
      */
-    public Grid(int width, int height) {
+    public Grid(int width, int height) throws Exception {
         if (width > 0 && height > 0) {
             GRID_WIDTH = width;
             GRID_HEIGHT = height;
         } else {
-            GRID_WIDTH = 1;
-            GRID_HEIGHT = 1;
+            throw new Exception("Width or/and height of grid is/are invalid!");
         }
+
         world = new int[GRID_HEIGHT][GRID_WIDTH];
         setState(DEFAULT_STATE);
     }
 
-    /**
-     * Creates the world grid using a custom matrix parameter.
-     * @param custom_matrix Matrix containing all states to be copied.
-     */
-    public Grid(int[][] custom_matrix) {
-        world = custom_matrix;
-        GRID_HEIGHT = custom_matrix.length;
-        GRID_WIDTH = custom_matrix[0].length;
+    public int[][] getWorld() {
+        return world.clone();
+    }
+
+    public void setWorld(int[][] newWorld) {
+        world = newWorld;
+    }
+
+    private void saveGrid(File filename) {
+        try {
+            FileOutputStream stream = new FileOutputStream(filename);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
+
+            writer.write(GRID_WIDTH + ", " + GRID_HEIGHT);
+            writer.newLine();
+            for (int i = 0; i < GRID_HEIGHT; i++) {
+                for (int j = 0; j < GRID_WIDTH; j++) {
+                    Location here = new Location(j, i);
+                    int state = getState(here);
+                    writer.write(state + ", ");
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveGrid() {
+        try {
+            File filename = new File("test.txt");
+            if (filename.createNewFile()) {
+                System.out.println("Saved grid filename: " + filename.getName());
+                saveGrid(filename);
+            } else {
+                System.out.println("File already exists");
+                filename.delete();
+                saveGrid(filename);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 
     /**
@@ -54,24 +88,22 @@ public class Grid {
     }
 
     /**
-     * @param x Cell's x-coordinate.
-     * @param y Cell's y-coordinate.
-     * @return The state of a given (x, y) cell from the world.
+     * @param loc The location on the grid.
+     * @return The state of a given cell from the world.
      */
-    public int getState(int x, int y) {
-        return world[y][x];
+    public int getState(Location loc) {
+        return world[loc.y()][loc.x()];
     }
 
     /**
-     * Sets the state of a given (x, y) cell from the world.
-     * @param x Cell's x-coordinate.
-     * @param y Cell's y-coordinate.
+     * Sets the state of a given cell from the world.
+     * @param loc The location of the given cell on the grid.
      * @param value Value to be set.
      * @return True if successful, false otherwise.
      */
-    public boolean setState(int x, int y, int value) {
-        if (x >= 0 && x < GRID_WIDTH && y >= 0 && y < GRID_HEIGHT) {
-            world[y][x] = value;
+    public boolean setState(Location loc, int value) {
+        if (loc.x() >= 0 && loc.x() < GRID_WIDTH && loc.y() >= 0 && loc.y() < GRID_HEIGHT) {
+            world[loc.y()][loc.x()] = value;
             return true;
         } else {
             return false;
@@ -85,56 +117,43 @@ public class Grid {
     public void setState(int value) {
         for (int i = 0; i < GRID_HEIGHT; i++) {
             for (int j = 0; j < GRID_WIDTH; j++) {
-                setState(j, i, value);
+                Location here = new Location(j, i);
+                setState(here, value);
             }
         }
     }
 
     /**
-     * Sets a given state to a list of cells.
-     * @param coords int array storing all cells' coordinates.
+     * Sets a given state to a list of location of cells.
+     * @param locs Array storing all cells' locations.
      * @param state The state wanted to be set.
      */
-    public void setState(int[][] coords, int state) {
-        for (int[] point : coords) {
-            setState(point[0], point[1], state);
+    public void setState(ArrayList<Location> locs, int state) {
+        for (Location here : locs) {
+            setState(here, state);
         }
     }
 
     /**
      * Sets a random state between a given range for every cell.
-     * @param min Minimum value.
-     * @param max Maximum value.
+     * @param min Minimum integer value.
+     * @param max Maximum integer value.
      */
     public void setRandom(int min, int max) {
         for (int i = 0; i < GRID_HEIGHT; i++) {
             for (int j = 0; j < GRID_WIDTH; j++) {
                 int num = min + (int)(Math.random() * ((max - min) + 1));
-                setState(j, i, num);
+                Location here = new Location(j, i);
+                setState(here, num);
             }
         }
-    }
-
-    /**
-     * @return A copy of the world.
-     */
-    public int[][] getWorld() {
-        return world;
-    }
-
-    /**
-     * Overrides current world with a custom world.
-     * @param custom_world New world.
-     */
-    public void setWorld(int[][] custom_world) {
-        world = custom_world;
     }
 
     /**
      * @return One-dimensional array containing all states.
      */
     private int[] asArray() {
-        List<Integer> arr = new ArrayList<>();
+        ArrayList<Integer> arr = new ArrayList<>();
         for (int i = 0; i < GRID_HEIGHT; i++) {
             for (int j = 0; j < GRID_WIDTH; j++) {
                 arr.add(world[i][j]);
@@ -163,15 +182,14 @@ public class Grid {
     }
 
     /**
-     * @param x Cell's x-coordinate.
-     * @param y Cell's y-coordinate.
+     * @param loc Cell's location on the grid.
      * @param width Width of the neighbours matrix.
      * @param height Height of the neighbours matrix.
-     * @return Grid containing nxm adjacent cells from a given cell.
+     * @return core.Grid containing nxm adjacent cells from a given cell.
      */
-    public Grid getNeighboursGrid(int x, int y, int width, int height) {
+    public Grid getNeighboursGrid(Location loc, int width, int height) throws Exception {
         if (width % 2 == 0 || height % 2 == 0) {
-            System.out.println("Neighbour matrix dimensions must be odd!");
+            throw new Exception("Neighbour matrix dimensions must be odd!");
         }
 
         int halfWidth = width / 2;
@@ -184,10 +202,13 @@ public class Grid {
 
         for (int k = -halfHeight; k < height - halfHeight; k++) {
             for (int l = -halfWidth; l < width - halfWidth; l++) {
+                Location here = new Location(j, i);
                 try {
-                    neighboursGrid.setState(j, i, world[y + k][x + l]);
+                    /* In bounds */
+                    neighboursGrid.setState(here, world[loc.y() + k][loc.x() + l]);
                 } catch (Exception e) {
-                    neighboursGrid.setState(j, i, DEFAULT_STATE);
+                    /* Out of bounds */
+                    neighboursGrid.setState(here, DEFAULT_STATE);
                 } finally {
                     j++;
                 }
@@ -200,33 +221,32 @@ public class Grid {
     }
 
     /**
-     * @param x Cell's x-coordinate.
-     * @param y Cell's y-coordinate.
+     * @param loc core.Location of the cell on the grid.
      * @param width Width of the neighbours matrix.
      * @param height Height of the neighbours matrix.
      * @return The sum of all the nxm adjacent values from a given cell.
      */
-    public int getNeighbours(int x, int y, int width, int height) {
-        Grid neighboursGrid = getNeighboursGrid(x, y, width, height);
+    public int getNeighbours(Location loc, int width, int height) throws Exception {
+        Grid neighboursGrid = getNeighboursGrid(loc, width, height);
 
         int total = 0;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                total += neighboursGrid.getState(j, i);
+                Location here = new Location(j, i);
+                total += neighboursGrid.getState(here);
             }
         }
 
-        return total - getState(x, y); // discards central cell as neighbour
+        return total - getState(loc); // discards central cell as neighbour
     }
 
     /**
      * Default use for getting the sum of immediate neighbours from a given cell.
-     * @param x Cell's x-coordinate.
-     * @param y Cell's y-coordinate.
+     * @param loc Cell's location on the grid.
      * @return The sum of all 3x3 adjacent values from a given cell.
      */
-    public int getNeighbours(int x, int y) {
-        return getNeighbours(x, y, 3, 3);
+    public int getNeighbours(Location loc) throws Exception {
+        return getNeighbours(loc, 3, 3);
     }
 
     /**
@@ -252,7 +272,7 @@ public class Grid {
         if (arr.length % 2 == 0) {
             median = ((double) arr[arr.length / 2] + (double) arr[arr.length / 2 - 1]) / 2;
         } else {
-            median = (double) arr[arr.length / 2];
+            median = arr[arr.length / 2];
         }
         return median;
     }
@@ -286,12 +306,5 @@ public class Grid {
         }
 
         return str.toString();
-    }
-
-    /**
-     * @return Hashcode of this object.
-     */
-    public String hash() {
-        return Integer.toHexString(this.hashCode());
     }
 }

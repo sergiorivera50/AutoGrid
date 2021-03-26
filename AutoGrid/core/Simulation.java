@@ -1,22 +1,25 @@
-package AutoGrid;
+package core;
 
+import rules.*;
 
-import AutoGrid.Rules.Rule;
+import java.util.ArrayList;
 
 public class Simulation {
     private Grid grid;
     private final Grid original_grid;
+    private ArrayList<int[][]> record = new ArrayList<>();
     private Rule rules;
 
     /**
-     * Creates a simulation according to a given Grid and Rules.
-     * @param simulation_grid Grid to operate in.
+     * Creates a simulation according to a given core.Grid and Rules.
+     * @param simulation_grid core.Grid to operate in.
      * @param simulation_rules String containing the name of the rules configuration.
      */
     public Simulation (Grid simulation_grid, String simulation_rules) {
         grid = simulation_grid;
         original_grid = simulation_grid;
         rules = getRules(simulation_rules);
+        record.add(grid.getWorld());
     }
 
     /**
@@ -27,7 +30,7 @@ public class Simulation {
         Object obj = new Object();
 
         try {
-            Class<?> c = Class.forName("AutoGrid.Rules." + rules_name);
+            Class<?> c = Class.forName("rules." + rules_name);
             try {
                 obj = c.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
@@ -35,22 +38,39 @@ public class Simulation {
                 System.exit(0);
             }
         } catch (ClassNotFoundException e) {
-            System.out.println(rules_name + " was not found inside the Rules folder!");
+            System.out.println(rules_name + " not found!");
             System.exit(0);
         }
 
         return (Rule) obj;
     }
 
+    public int[][] getFromRecord(int generation) throws Exception {
+        if ((generation-1) > record.size()) {
+            throw new Exception("Cannot retrieve a world from a future generation!");
+        }
+
+        return record.get(generation-1);
+    }
+
+    public void updateLastGeneration(int generation) {
+        ArrayList<int[][]> newRecord = new ArrayList<>();
+        for (int i = 0; i < generation; i++) {
+            int[][] currentWorld = record.get(i);
+            newRecord.add(currentWorld);
+        }
+        record = newRecord;
+    }
+
     /**
      * Moves a step forward in the simulation.
      */
-    public void step() {
+    public void step() throws Exception {
         simulate(1);
     }
 
     /**
-     * Sets Grid to its original state when the simulation began.
+     * Sets core.Grid to its original state when the simulation began.
      */
     public void reset() {
         grid = original_grid;
@@ -60,23 +80,25 @@ public class Simulation {
      * Moves n steps forward in the simulation.
      * @param generations Number of steps to simulate.
      */
-    public void simulate(int generations, boolean print) {
-        int[][] currentWorld = grid.getWorld();
-        int[][] futureWorld = new int[currentWorld.length][currentWorld[0].length];
+    public void simulate(int generations, boolean print) throws Exception {
+        Grid futureGrid = new Grid(grid.getWidth(), grid.getHeight());
 
         for (int gens = 1; gens <= generations; gens++) {
             for (int i = 0; i < grid.getHeight(); i++) {
                 for (int j = 0; j < grid.getWidth(); j++) {
-                    int newState = rules.update(j, i, grid);
-                    futureWorld[i][j] = newState;
+                    Location here = new Location(j, i);
+                    int newState = rules.update(here, grid);
+                    futureGrid.setState(here, newState);
                 }
             }
-            grid.setWorld(futureWorld);
+
+            grid.setWorld(futureGrid.getWorld());
+            record.add(grid.getWorld());
             if (print) System.out.println(grid);
         }
     }
 
-    public void simulate(int generations) {
+    public void simulate(int generations) throws Exception {
         simulate(generations, false);
     }
 
@@ -93,14 +115,7 @@ public class Simulation {
      * @return A String to represent this object.
      */
     public String toString() {
-        return "Simulation " + hash() + "\n\tGrid: " + grid.hash() + "[w:"+grid.getWidth()+"][h:"
+        return "core.Simulation " + this.hashCode() + "\n\tcore.Grid: " + grid.hashCode() + "[w:"+grid.getWidth()+"][h:"
                 + grid.getHeight()+"]\n\tRules: " + rules.getClass().getSimpleName();
-    }
-
-    /**
-     * @return Hashcode of this object.
-     */
-    public String hash() {
-        return Integer.toHexString(this.hashCode());
     }
 }

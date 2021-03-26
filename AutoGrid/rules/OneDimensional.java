@@ -1,12 +1,13 @@
-package AutoGrid.Rules;
+package rules;
 
-import AutoGrid.Grid;
+import core.Location;
+import core.Grid;
 
 public class OneDimensional extends Rule {
     @Override
-    public int update(int x, int y, Grid grid) {
-        int state = grid.getState(x, y);
-        int neighbours = grid.getNeighbours(x, y);
+    public int update(Location loc, Grid grid) throws Exception {
+        int state = grid.getState(loc);
+        int neighbours = grid.getNeighbours(loc);
 
         if (state == 0) {
             if (neighbours == 2) {
