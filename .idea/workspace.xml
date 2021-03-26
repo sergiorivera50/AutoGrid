@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="60e8d18a-bf30-4764-baac-88d48fd7c322" name="Default Changelist" comment="">
+    <list default="true" id="60e8d18a-bf30-4764-baac-88d48fd7c322" name="Default Changelist" comment="Minor refactoring">
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AutoGrid/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AutoGrid/Grid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AutoGrid/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AutoGrid/Simulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AutoGridMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AutoGridMain.java" afterDir="false" />
     </list>
     <list id="5619bc30-8da2-4a8f-8562-e8403097e501" name="[MINOR] Added statistical metrics (median and mean for the time being), added asArray() method for transforming 2D matrix to 1D vector/array." comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,10 +43,10 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TODO_SCOPE" value="All Places" />
@@ -90,6 +90,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -107,6 +108,7 @@
       <workItem from="1595446288521" duration="1349000" />
       <workItem from="1595495890894" duration="810000" />
       <workItem from="1595496743637" duration="389000" />
+      <workItem from="1616761842390" duration="395000" />
     </task>
     <task id="LOCAL-00001" summary="Got rid of custom Exceptions, now exception cases are handled with standard output and System.exit(0), minor changes.">
       <created>1595427205642</created>
@@ -157,11 +159,18 @@
       <option name="project" value="LOCAL" />
       <updated>1595496389323</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Minor refactoring">
+      <created>1616762004280</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616762004280</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -178,13 +187,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Got rid of custom Exceptions, now exception cases are handled with standard output and System.exit(0), minor changes." />
@@ -193,96 +201,7 @@
     <MESSAGE value="[MINOR] Added statistical metrics (median and mean for the time being), added asArray() method for transforming 2D matrix to 1D vector/array." />
     <MESSAGE value="[MINOR] Added rule OneDimensional for 1D cellular automata." />
     <MESSAGE value="[MINOR] Added javadoc comments to all methods from all classes, Grid.reset() method is now in use.w" />
-    <option name="LAST_COMMIT_MESSAGE" value="[MINOR] Added javadoc comments to all methods from all classes, Grid.reset() method is now in use.w" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="485" y="83" key="#AutoGridMain" timestamp="1595412391947">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="485" y="83" key="#AutoGridMain/0.0.1536.824@0.0.1536.824" timestamp="1595412391947" />
-    <state x="361" y="71" key="#Project_Structure" timestamp="1595411905741">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="71" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1595411905741" />
-    <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1595411539710">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1595411539710" />
-    <state x="147" y="7" key="CommitChangelistDialog2" timestamp="1595496388398">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="147" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1595496388398" />
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1595431645601">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1595431645601" />
-    <state x="445" y="122" key="FileChooserDialogImpl" timestamp="1595496700038">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="445" y="122" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595496700038" />
-    <state x="591" y="328" key="Github.CreateGistDialog" timestamp="1595418851677">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="591" y="328" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1595418851677" />
-    <state width="745" height="113" key="GridCell.Tab.0.bottom" timestamp="1595496701170">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="745" height="113" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595496701170" />
-    <state width="745" height="113" key="GridCell.Tab.0.center" timestamp="1595496701169">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="745" height="113" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595496701169" />
-    <state width="745" height="113" key="GridCell.Tab.0.left" timestamp="1595496701169">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="745" height="113" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595496701169" />
-    <state width="745" height="113" key="GridCell.Tab.0.right" timestamp="1595496701170">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="745" height="113" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595496701170" />
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1595412414201">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595412414201" />
-    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1595412414201">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1595412414201" />
-    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1595412414201">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1595412414201" />
-    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1595412414201">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1595412414201" />
-    <state x="647" y="154" key="RollbackChangesDialog" timestamp="1595431555257">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="647" y="154" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1595431555257" />
-    <state x="333" y="0" key="SettingsEditor" timestamp="1595428268942">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="333" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1595428268942" />
-    <state x="618" y="348" key="VCS.ChangelistChooser" timestamp="1595431598921">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="618" y="348" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1595431598921" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1595496394497">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1595496394497" />
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595426630733">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="578" y="329" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1595426630733" />
-    <state x="499" y="178" key="extract.method.dialog" timestamp="1595496673792">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="499" y="178" key="extract.method.dialog/0.0.1536.824@0.0.1536.824" timestamp="1595496673792" />
-    <state x="432" y="200" key="run.anything.popup" timestamp="1595418448885">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="432" y="200" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1595418448885" />
+    <MESSAGE value="Minor refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor refactoring" />
   </component>
 </project>

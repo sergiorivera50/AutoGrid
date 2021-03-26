@@ -1,6 +1,5 @@
 package AutoGrid;
 
-
 import AutoGrid.Rules.Rule;
 
 public class Simulation {
@@ -13,33 +12,10 @@ public class Simulation {
      * @param simulation_grid Grid to operate in.
      * @param simulation_rules String containing the name of the rules configuration.
      */
-    public Simulation (Grid simulation_grid, String simulation_rules) {
+    public Simulation (Grid simulation_grid, Rule simulation_rules) {
         grid = simulation_grid;
         original_grid = simulation_grid;
-        rules = getRules(simulation_rules);
-    }
-
-    /**
-     * Gets rules configuration.
-     * @param rules_name String containing the name of the rules configuration.
-     */
-    private Rule getRules(String rules_name) {
-        Object obj = new Object();
-
-        try {
-            Class<?> c = Class.forName("AutoGrid.Rules." + rules_name);
-            try {
-                obj = c.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                System.out.println("There was an error while instantiating " + c.getName() + "!");
-                System.exit(0);
-            }
-        } catch (ClassNotFoundException e) {
-            System.out.println(rules_name + " was not found inside the Rules folder!");
-            System.exit(0);
-        }
-
-        return (Rule) obj;
+        rules = simulation_rules;
     }
 
     /**
