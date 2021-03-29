@@ -2,6 +2,9 @@ import core.Grid;
 import core.Location;
 import core.Simulation;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,6 +13,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import rules.GameOfLife;
+import rules.Rule;
 
 import java.util.ArrayList;
 
@@ -28,9 +33,11 @@ public class DrawGrid extends Application {
     private static Color aliveColor = Color.LAVENDER;
     private static Color deadColor = Color.DARKSLATEGREY;
     private static int[][] realWorld;
+    private static boolean isPlaying = false;
 
     private static int maxGenerated = 1;
     private static int currentGeneration = maxGenerated;
+
 
     private void draw() {
         for (int i = 0; i < grid.getHeight(); i++) {
@@ -55,33 +62,43 @@ public class DrawGrid extends Application {
     }
 
     private void handleKeyPressed(KeyEvent event) throws Exception {
-        if (event.getCode() == KeyCode.SPACE) {
-            grid.setWorld(realWorld);
-            sim.step();
-            realWorld = grid.getWorld();
-            maxGenerated++;
-            currentGeneration = maxGenerated;
-        } else if (event.getCode() == KeyCode.LEFT) {
-            if (currentGeneration > 1) {
-                currentGeneration--;
-                int[][] previousWorld = sim.getFromRecord(currentGeneration);
-                grid.setWorld(previousWorld);
-            }
-        } else if (event.getCode() == KeyCode.RIGHT) {
-            if (currentGeneration < maxGenerated) {
-                currentGeneration++;
-                int[][] previousWorld = sim.getFromRecord(currentGeneration);
-                grid.setWorld(previousWorld);
-            }
-        } else if (event.getCode() == KeyCode.UP) {
-            currentGeneration = maxGenerated;
-            int[][] lastWorld = sim.getFromRecord(currentGeneration);
-            grid.setWorld(lastWorld);
-        } else if (event.getCode() == KeyCode.DOWN) {
-            currentGeneration = 1;
-            int[][] firstWorld = sim.getFromRecord(currentGeneration);
-            grid.setWorld(firstWorld);
+        switch(event.getCode()) {
+            case SPACE:
+                grid.setWorld(realWorld);
+                sim.step();
+                realWorld = grid.getWorld();
+                maxGenerated++;
+                currentGeneration = maxGenerated;
+                break;
+            case LEFT:
+                if (currentGeneration > 1) {
+                    currentGeneration--;
+                    int[][] previousWorld = sim.getFromRecord(currentGeneration);
+                    grid.setWorld(previousWorld);
+                }
+                break;
+            case RIGHT:
+                if (currentGeneration < maxGenerated) {
+                    currentGeneration++;
+                    int[][] previousWorld = sim.getFromRecord(currentGeneration);
+                    grid.setWorld(previousWorld);
+                }
+                break;
+            case UP:
+                currentGeneration = maxGenerated;
+                int[][] lastWorld = sim.getFromRecord(currentGeneration);
+                grid.setWorld(lastWorld);
+                break;
+            case DOWN:
+                currentGeneration = 1;
+                int[][] firstWorld = sim.getFromRecord(currentGeneration);
+                grid.setWorld(firstWorld);
+                break;
+            case P:
+                DrawGrid.isPlaying = !DrawGrid.isPlaying;
+                break;
         }
+
         primaryStage.setTitle("AutoGrid [" + currentGeneration + "/" + maxGenerated + "]");
         this.draw();
     }
@@ -100,7 +117,12 @@ public class DrawGrid extends Application {
             int cellY = (int) Math.ceil(event.getY() / cellSizeY) - 1;
             Location mousePos = new Location(cellX, cellY);
             try {
-                grid.setState(mousePos, 1);
+                int state = grid.getState(mousePos);
+                if (state == 1) {
+                    grid.setState(mousePos, 0);
+                } else {
+                    grid.setState(mousePos, 1);
+                }
                 if (currentGeneration != maxGenerated) {
                     sim.updateLastGeneration(currentGeneration);
                     maxGenerated = currentGeneration;
@@ -126,9 +148,37 @@ public class DrawGrid extends Application {
         });
 
         DrawGrid.primaryStage = primaryStage;
-        primaryStage.setTitle("AutoGrid");
+        primaryStage.setTitle("AutoGrid Simulator");
         primaryStage.setScene(gridScene);
         primaryStage.show();
+
+        Thread playThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (isPlaying) {
+                    Platform.runLater(() -> {
+                        grid.setWorld(realWorld);
+                        try {
+                            sim.step();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        realWorld = grid.getWorld();
+                        maxGenerated++;
+                        currentGeneration = maxGenerated;
+                        draw();
+                        primaryStage.setTitle("AutoGrid [" + currentGeneration + "/" + maxGenerated + "]");
+                    });
+                }
+            }
+        });
+        playThread.setDaemon(true);
+        playThread.start();
     }
 
     private static Grid template(String gridType, int width, int height) throws Exception {
@@ -157,10 +207,13 @@ public class DrawGrid extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        grid = template("allZeros", 100, 100);
+        grid = template("gameOfLife", 100, 100);
+        Rule simulation_rules = new GameOfLife();
+
         realWorld = grid.getWorld();
         grid.saveGrid();
-        sim = new Simulation(grid, "RandomChoice");
+        sim = new Simulation(grid, simulation_rules);
+
         cellSizeX = sceneWidth / grid.getWidth();
         cellSizeY = sceneHeight / grid.getHeight();
         launch(args);

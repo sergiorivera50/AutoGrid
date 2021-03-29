@@ -64,7 +64,7 @@ public class Grid implements Cloneable {
                 saveGrid(filename);
             } else {
                 System.out.println("File already exists");
-                filename.delete();
+                boolean status = filename.delete();
                 saveGrid(filename);
             }
         } catch (IOException e) {
